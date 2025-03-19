@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Grid from "./Grid";
 import Keyboard from './Keyboard';
+import Confetti from 'react-confetti';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -13,6 +14,7 @@ const App = () => {
   const [message, setMessage] = useState("");
   const [letterStates, setLetterStates] = useState({});
   const [error, setError] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const startNewGame = async () => {
     try {
@@ -39,7 +41,7 @@ const App = () => {
   // Update the makeGuess function
   const makeGuess = async (guess) => {
     try {
-      const response = await fetch(`${API_URL}/make-guess`, {
+      const response = await fetch('http://localhost:5000/api/make-guess', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,6 +49,12 @@ const App = () => {
         body: JSON.stringify({ guess }),
       });
       const data = await response.json();
+      
+      if (data.won) {
+        setShowConfetti(true);
+        // Optional: Hide confetti after 5 seconds
+        setTimeout(() => setShowConfetti(false), 5000);
+      }
       
       if (!response.ok) {
         setError(data.error);
@@ -118,7 +126,11 @@ const App = () => {
   return (
     <div className="App">
       <h1>Issadle</h1>
+
       {error && <div className="error-message">{error}</div>}
+
+      {showConfetti && <Confetti />}
+
       <Grid 
         guesses={guesses} 
         currentGuess={currentGuess} 

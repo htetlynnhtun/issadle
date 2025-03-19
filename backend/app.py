@@ -74,14 +74,16 @@ def make_guess():
     game_state.current_row += 1
     
     game_over = game_state.current_row >= 6 or guess == game_state.target_word
+    won = guess == game_state.target_word
     
     return jsonify({
         'guesses': game_state.guesses,
         'currentRow': game_state.current_row,
         'evaluation': evaluation,
-        'isCorrect': guess == game_state.target_word,
+        'isCorrect': won,
         'gameOver': game_over,
-        'targetWord': game_state.target_word if game_over else None
+        'targetWord': game_state.target_word if game_over else None,
+        'won': won
     })
 
 if __name__ == '__main__':
