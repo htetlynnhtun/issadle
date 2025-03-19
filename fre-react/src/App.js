@@ -12,6 +12,7 @@ const App = () => {
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState("");
   const [letterStates, setLetterStates] = useState({});
+  const [error, setError] = useState("");
 
   const startNewGame = async () => {
     try {
@@ -34,6 +35,7 @@ const App = () => {
     startNewGame();
   }, []);
 
+  // Update the makeGuess function
   const makeGuess = async (guess) => {
     try {
       const response = await fetch(`${API_URL}/make-guess`, {
@@ -44,6 +46,12 @@ const App = () => {
         body: JSON.stringify({ guess }),
       });
       const data = await response.json();
+      
+      if (!response.ok) {
+        setError(data.error);
+        setTimeout(() => setError(""), 2000); // Auto-dismiss after 2 seconds
+        return;
+      }
       
       setGuesses(data.guesses);
       setCurrentRow(data.currentRow);
@@ -109,6 +117,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>Issadle</h1>
+      {error && <div className="error-message">{error}</div>}
       <Grid 
         guesses={guesses} 
         currentGuess={currentGuess} 

@@ -65,6 +65,9 @@ def make_guess():
     
     if len(guess) != 5 or game_state.current_row >= 6:
         return jsonify({'error': 'Invalid guess'}), 400
+    
+    if guess not in WORD_LIST:
+        return jsonify({'error': 'Word not found'}), 400
 
     evaluation = game_state.evaluate_guess(guess)
     game_state.guesses[game_state.current_row] = guess
