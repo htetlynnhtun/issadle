@@ -19,6 +19,8 @@ const App = () => {
       const data = await response.json();
       setGuesses(data.guesses);
       setCurrentRow(data.currentRow);
+      setCurrentGuess("");
+      setEvaluations(Array(6).fill(null));
       setGameOver(false);
       setMessage("");
     } catch (error) {
