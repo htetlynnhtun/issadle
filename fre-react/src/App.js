@@ -26,6 +26,7 @@ const App = () => {
       setEvaluations(Array(6).fill(null));
       setGameOver(false);
       setMessage("");
+      setLetterStates({}); // Reset the keyboard letter states
     } catch (error) {
       console.error('Error starting new game:', error);
     }
