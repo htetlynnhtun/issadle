@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Grid from "./Grid";
+import Keyboard from './Keyboard';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -10,6 +11,7 @@ const App = () => {
   const [currentRow, setCurrentRow] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState("");
+  const [letterStates, setLetterStates] = useState({});
 
   const startNewGame = async () => {
     try {
@@ -85,6 +87,25 @@ const App = () => {
     return () => window.removeEventListener("keydown", handleInput);
   }, [handleInput]);
 
+  // Update letterStates when receiving evaluation
+  useEffect(() => {
+    if (evaluations[currentRow - 1]) {
+      const newLetterStates = { ...letterStates };
+      const guess = guesses[currentRow - 1];
+      evaluations[currentRow - 1].forEach((state, index) => {
+        const letter = guess[index];
+        if (state === 'correct') {
+          newLetterStates[letter] = 'correct';
+        } else if (state === 'present' && newLetterStates[letter] !== 'correct') {
+          newLetterStates[letter] = 'present';
+        } else if (!newLetterStates[letter]) {
+          newLetterStates[letter] = 'absent';
+        }
+      });
+      setLetterStates(newLetterStates);
+    }
+  }, [evaluations, currentRow, guesses, letterStates]);
+
   return (
     <div className="App">
       <h1>Issadle</h1>
@@ -93,6 +114,10 @@ const App = () => {
         currentGuess={currentGuess} 
         currentRow={currentRow}
         evaluations={evaluations}
+      />
+      <Keyboard 
+        onKeyPress={handleInput}
+        letterStates={letterStates}
       />
       {message && <p className="message">{message}</p>}
       {gameOver && (
