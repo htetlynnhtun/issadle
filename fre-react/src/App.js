@@ -121,7 +121,7 @@ const App = () => {
       />
       {message && <p className="message">{message}</p>}
       {gameOver && (
-        <button onClick={startNewGame}>New Game</button>
+        <button className="new-game-button" onClick={startNewGame}>New Game</button>
       )}
     </div>
   );
