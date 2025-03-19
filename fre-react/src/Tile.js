@@ -1,11 +1,12 @@
 import React from "react";
 
-const Tile = ({ letter, isCorrect, isPresent }) => {
+const Tile = ({ letter, state }) => {
   let className = "tile";
-  if (isCorrect) {
-    className += " correct";
-  } else if (isPresent) {
-    className += " present";
+  if (letter !== " ") {
+    className += " filled";
+  }
+  if (state) {
+    className += ` ${state}`;
   }
 
   return <div className={className}>{letter}</div>;

@@ -1,7 +1,7 @@
 import React from "react";
 import Tile from "./Tile";
 
-const Row = ({ guess, isCurrent, currentGuess, targetWord, showFeedback }) => {
+const Row = ({ guess, isCurrent, currentGuess, evaluation }) => {
   const letters = isCurrent ? currentGuess.padEnd(5, " ") : guess;
 
   return (
@@ -10,8 +10,7 @@ const Row = ({ guess, isCurrent, currentGuess, targetWord, showFeedback }) => {
         <Tile
           key={index}
           letter={letters[index]}
-          isCorrect={showFeedback && letters[index] === targetWord[index]}
-          isPresent={showFeedback && targetWord.includes(letters[index])}
+          state={evaluation ? evaluation[index] : null}
         />
       ))}
     </div>

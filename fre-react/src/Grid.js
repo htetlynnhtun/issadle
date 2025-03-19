@@ -1,7 +1,7 @@
 import React from "react";
 import Row from "./Row";
 
-const Grid = ({ guesses, currentGuess, targetWord, currentRow }) => {
+const Grid = ({ guesses, currentGuess, currentRow, evaluations }) => {
   return (
     <div className="grid">
       {guesses.map((guess, index) => (
@@ -10,8 +10,7 @@ const Grid = ({ guesses, currentGuess, targetWord, currentRow }) => {
           guess={guess}
           isCurrent={index === currentRow}
           currentGuess={currentGuess}
-          targetWord={targetWord}
-          showFeedback={index < currentRow}
+          evaluation={evaluations[index]}
         />
       ))}
     </div>
