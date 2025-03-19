@@ -5,7 +5,23 @@ import random
 app = Flask(__name__)
 CORS(app)
 
-WORD_LIST = ["REACT", "TRACE", "CRATE", "CATER", "HEART"]
+WORD_LIST = [
+    "REACT", "TRACE", "CRATE", "CATER", "HEART",
+    "ABOUT", "ABOVE", "AFTER", "AGAIN", "ALONE",
+    "ALONG", "BEACH", "BEGIN", "BLACK", "BRING",
+    "CHILD", "CLEAN", "CLEAR", "CLOSE", "COUNT",
+    "DREAM", "DRINK", "DRIVE", "EARLY", "EARTH",
+    "ENJOY", "ENTER", "EVERY", "FOCUS", "FORCE",
+    "FRESH", "GREAT", "GREEN", "HAPPY", "HOUSE",
+    "LEARN", "LIGHT", "MONEY", "MUSIC", "NEVER",
+    "NIGHT", "PEACE", "PLACE", "PLANT", "POINT",
+    "POWER", "PRICE", "QUICK", "RIGHT", "SMILE",
+    "SOUND", "SPACE", "SPEAK", "STAND", "START",
+    "STATE", "STORY", "STUDY", "STYLE", "SWEET",
+    "TABLE", "THANK", "THINK", "TODAY", "TOUCH",
+    "VOICE", "WATCH", "WATER", "WORLD", "WRITE",
+    "YOUNG"
+]
 
 class GameState:
     def __init__(self):
